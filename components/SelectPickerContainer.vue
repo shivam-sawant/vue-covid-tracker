@@ -6,7 +6,7 @@
       :options="countryOptions"
       :model.sync="selectedCountry"
       :value="selectedCountry"
-      :searchable="true"
+      :searchable="false"
       @input="triggerCountryChanged"
     >
     </vueSelect2>
