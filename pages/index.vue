@@ -1,0 +1,126 @@
+<template>
+  <div v-if="!isLoading">
+    <!-- Title -->
+    <div>
+      <h1>Covid 19 Tracker</h1>
+    </div>
+    <div class="global_section">
+      <CardsIndex :globalData="globalData" />
+    </div>
+    <div class="select_picker_container">
+      <SelectPickerContainer
+        v-if="countries"
+        :countryData="countries"
+        @countryChanged="fetchCountryData"
+        ref="select2Ref"
+      />
+    </div>
+    <div class="chart_container">
+      <JsonCSV
+        :data="countryReport">
+        Download Data
+        <img src="download_icon.png">
+    </JsonCSV>
+      <LineChart
+        v-if="countryReport"
+        :countryReport="countryReport"
+        ref="chartRef"
+      />
+    </div>
+    <Footer></Footer>
+  </div>
+  <div v-else>Loading</div>
+</template>
+
+<script>
+import JsonCSV from 'vue-json-csv'
+import Footer from '@/components/Footer'
+export default {
+  components:{
+    JsonCSV, Footer
+  },
+  data() {
+    return {
+      countries: [],
+      globalData: {},
+      isLoading: true,
+      countryReport: [],
+    };
+  },
+  methods: {
+    async fetchGlobalStats() {
+      let { data } = await this.$axios.get(
+        "https://api.covid19api.com/summary"
+      );
+      return data;
+    },
+    async fetchCountryData(country) {
+      const vim = this;
+      var curDate = new Date();
+      const curMonthDate =
+        curDate.getFullYear() +
+        "-" +
+        curDate.getMonth() +
+        "-" +
+        curDate.getDate();
+      curDate.setMonth(curDate.getMonth() - 3);
+      const last6thMonth = curDate.getFullYear() + "-" + curDate.getMonth();
+      const startDate = last6thMonth + "-01T00:00:00Z";
+      const endDate = curMonthDate + "T00:00:00Z";
+      await this.$axios
+        .get(
+          "https://api.covid19api.com/country/" +
+            country +
+            "?from=" +
+            startDate +
+            "&to=" +
+            startDate
+        )
+        .then(function (res) {
+          vim.countryReport = res.data;
+          vim.$refs.chartRef.initChart(res.data);
+        });
+    },
+    async getUserData() {
+      const vim = this;
+      await this.$axios.get("http://geoip-db.com/json/").then((result) => {
+        console.log(" result : ", result);
+        const countryName = result.data.country_name;
+        if (countryName) {
+          const countryData = vim.countries.find(({ Country, CountryCode }) => {
+            console.log(
+              "country.Country.toLowerCase() == result.country_name.toLowerCase()"
+            );
+            console.log(Country);
+            console.log("result.country_name");
+            console.log(countryName);
+            return Country.toLowerCase() == countryName.toLowerCase();
+          });
+          vim.$refs.select2Ref.selectCountry({
+            text: countryData.Country,
+            label: countryData.Country,
+            value: countryData.CountryCode,
+          });
+          vim.fetchCountryData(countryData.Country);
+        }
+      });
+    },
+  },
+  created() {
+    const vim = this;
+    this.fetchGlobalStats().then(function (res) {
+      vim.isLoading = false;
+      vim.globalData = res.Global;
+      vim.countries = res.Countries;
+      vim.getUserData();
+    });
+  },
+};
+</script>
+<style lang="css">
+.chart_container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+</style>
