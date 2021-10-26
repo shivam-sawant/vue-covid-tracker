@@ -31,6 +31,7 @@ export default {
   },
   methods: {
       triggerCountryChanged: function (newVal) {
+        this.selectedCountry = newVal;
         this.$emit("countryChanged", newVal.value);
       },
       selectCountry: function(selectedVal){
