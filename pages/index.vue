@@ -83,9 +83,9 @@ export default {
     },
     async getUserData() {
       const vim = this;
-      await this.$axios.get("http://geoip-db.com/json/").then((result) => {
+      await this.$axios.get("https://api.db-ip.com/v2/free/self").then((result) => {
         console.log(" result : ", result);
-        const countryName = result.data.country_name;
+        const countryName = result.data.countryName;
         if (countryName) {
           const countryData = vim.countries.find(({ Country, CountryCode }) => {
             console.log(
