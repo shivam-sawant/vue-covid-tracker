@@ -83,7 +83,7 @@ export default {
     },
     async getUserData() {
       const vim = this;
-      await this.$axios.get("http://geoip-db.com/json/").then((result) => {
+      await this.$axios.get("https://geoip-db.com/json/").then((result) => {
         console.log(" result : ", result);
         const countryName = result.data.country_name;
         if (countryName) {
