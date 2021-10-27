@@ -1,1 +1,0 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[6],{259:function(n,t,e){"use strict";e.r(t);var o={},l=e(45),component=Object(l.a)(o,(function(){var n=this,t=n.$createElement;return(n._self._c||t)("footer",[n._v("\n    Copyright Shivam @ 2021\n")])}),[],!1,null,null,null);t.default=component.exports;installComponents(component,{Footer:e(259).default})}}]);
