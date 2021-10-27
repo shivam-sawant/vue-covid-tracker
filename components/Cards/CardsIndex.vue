@@ -17,7 +17,5 @@ export default {
 </script>
 
 <style>
-.cards_section{
-    display: flex;
-}
+
 </style>

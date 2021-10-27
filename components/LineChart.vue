@@ -7,7 +7,7 @@ export default {
       initChart:function(countryReport){
           const vim = this;
                 this.renderChart({
-                    labels: countryReport.map(({ Date })=>  moment(String(Date)).format('MM/DD/YYYY')),
+                    labels: countryReport.map(({ Date })=>  moment(String(Date)).format('DD/MM/YYYY')),
                     datasets:[{
                         data:countryReport.map( ({ Confirmed })=> Confirmed),
                         label: 'Confirmed',
@@ -31,6 +31,3 @@ export default {
   },    
 }
 </script>
-
-<style>
-</style>

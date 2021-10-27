@@ -1,8 +1,10 @@
 <template>
   <div v-if="!isLoading">
+    <div class="container">
     <!-- Title -->
-    <div>
+    <div class="headingWrap">
       <h1>Covid 19 Tracker</h1>
+      <p>COVID-19 has put health systems under tremendous strain, with countries across the developing world facing their biggest test in living memory. This dashboard keeps track of COVID-19 cases and deaths globally</p>
     </div>
     <div class="global_section">
       <CardsIndex :globalData="globalData" />
@@ -28,6 +30,7 @@
       />
     </div>
     <Footer></Footer>
+  </div>
   </div>
   <div v-else>Loading</div>
 </template>
@@ -83,9 +86,9 @@ export default {
     },
     async getUserData() {
       const vim = this;
-      await this.$axios.get("https://api.db-ip.com/v2/free/self").then((result) => {
+      await this.$axios.get("https://api.freegeoip.app/json/?apikey=" + process.env.FREEGEOIP_KEY).then((result) => {
         console.log(" result : ", result);
-        const countryName = result.data.countryName;
+        const countryName = result.data.country_name;
         if (countryName) {
           const countryData = vim.countries.find(({ Country, CountryCode }) => {
             console.log(

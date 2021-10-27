@@ -8,13 +8,16 @@
 
 <script>
 export default {
- props:['title', 'total_count','desc', 'new_count']
+ props:['title', 'total_count','desc', 'new_count'],
+ setup () {
+    return {
+      numberWithCommas (x) {
+        return x.toString()
+          .replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      }
+    };
+  }
 }
-</script>
 
-<style>
-.card{
-    width: 20%;
-    padding: 20px 40px 50px;
-}
-</style>
+
+</script>
