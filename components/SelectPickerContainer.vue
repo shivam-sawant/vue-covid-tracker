@@ -3,7 +3,7 @@
     <p>Select Country:</p>
     <vueSelect2
       class="vue-select2"
-      name="select2"
+      name="select2" 
       :options="countryOptions"
       :model.sync="selectedCountry"
       :value="selectedCountry"
