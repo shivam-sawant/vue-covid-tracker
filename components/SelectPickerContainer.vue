@@ -1,6 +1,6 @@
 <template>
-  <div v-if="loaded">
-    <p>Select Country</p>
+  <div v-if="loaded" class="wrapdropdown">
+    <p>Select Country:</p>
     <vueSelect2
       class="vue-select2"
       name="select2"

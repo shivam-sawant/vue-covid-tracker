@@ -2,13 +2,18 @@
   <div v-if="!isLoading">
     <div class="container">
     <!-- Title -->
+    <div class="topheadWrap">
     <div class="headingWrap">
       <h1>Covid 19 Tracker</h1>
-      <p>COVID-19 has put health systems under tremendous strain, with countries across the developing world facing their biggest test in living memory. This dashboard keeps track of COVID-19 cases and deaths globally</p>
+      <p>This dashboard keeps track of COVID-19 cases and deaths globally.</p>
+    </div>
+
+    
     </div>
     <div class="global_section">
       <CardsIndex :globalData="globalData" />
     </div>
+
     <div class="select_picker_container">
       <SelectPickerContainer
         v-if="countries"
@@ -16,21 +21,26 @@
         @countryChanged="fetchCountryData"
         ref="select2Ref"
       />
-    </div>
-    <div class="chart_container">
+      <span class="btnwrap">
       <JsonCSV
         :data="countryReport">
-        Download Data
-        <img src="download_icon.png">
-    </JsonCSV>
+        Download
+      </JsonCSV>
+      </span>
+    </div>
+    
+    <div class="chart_container">
+       <transition name="slide-fade">
       <LineChart
         v-if="countryReport"
         :countryReport="countryReport"
         ref="chartRef"
       />
+      </transition>
     </div>
-    <Footer></Footer>
+    
   </div>
+  <Footer></Footer>
   </div>
   <div v-else>Loading</div>
 </template>
@@ -121,9 +131,5 @@ export default {
 };
 </script>
 <style lang="css">
-.chart_container {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-}
+
 </style>

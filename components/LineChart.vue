@@ -10,12 +10,12 @@ export default {
                     labels: countryReport.map(({ Date })=>  moment(String(Date)).format('DD/MM/YYYY')),
                     datasets:[{
                         data:countryReport.map( ({ Confirmed })=> Confirmed),
-                        label: 'Confirmed',
-                        borderColor: 'blue',
+                        label: 'Infected',
+                        borderColor: 'rgb(39, 173, 237)',
                         fill:true,
                     },{
                         data:countryReport.map( ({ Deaths })=> Deaths),
-                        label: 'deaths',
+                        label: 'Deaths',
                         borderColor: 'red',
                         backgroundColor: 'rgba(255,0,0,0.5)',
                         fill:true,
@@ -26,7 +26,7 @@ export default {
                         backgroundColor: 'rgb(0 255 165 / 50%)',
                         fill:true,
                     }]
-                });
+                }, {responsive: true});
       }
   },    
 }

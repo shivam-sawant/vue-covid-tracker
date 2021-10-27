@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <footer>
       Copyright Shivam @ 2021
-  </div>
+  </footer>
 </template>
 
 <script>
